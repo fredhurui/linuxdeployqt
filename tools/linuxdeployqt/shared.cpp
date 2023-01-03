@@ -52,7 +52,7 @@
 #endif
 
 QString appBinaryPath;
-bool runStripEnabled = true;
+bool runStripEnabled = false;
 bool bundleAllButCoreLibs = false;
 bool bundleEverything = false;
 bool fhsLikeMode = false;
@@ -60,7 +60,7 @@ QString fhsPrefix;
 bool alwaysOwerwriteEnabled = false;
 QStringList librarySearchPath;
 bool appstoreCompliant = false;
-int logLevel = 1;
+int logLevel = 2;
 int qtDetected = 0;
 bool qtDetectionComplete = 0; // As long as Qt is not detected yet, ldd may encounter "not found" messages, continue anyway
 bool deployLibrary = false;
@@ -141,55 +141,55 @@ struct QtModuleEntry {
 };
 
 static QtModuleEntry qtModuleEntries[] = {
-    { QtBluetoothModule, "bluetooth", "Qt5Bluetooth", 0 },
-    { QtCLuceneModule, "clucene", "Qt5CLucene", "qt_help" },
-    { QtConcurrentModule, "concurrent", "Qt5Concurrent", "qtbase" },
-    { QtCoreModule, "core", "Qt5Core", "qtbase" },
-    { QtDeclarativeModule, "declarative", "Qt5Declarative", "qtquick1" },
-    { QtDesignerModule, "designer", "Qt5Designer", 0 },
-    { QtDesignerComponents, "designercomponents", "Qt5DesignerComponents", 0 },
+    { QtBluetoothModule, "bluetooth", "Qt6Bluetooth", 0 },
+    { QtCLuceneModule, "clucene", "Qt6CLucene", "qt_help" },
+    { QtConcurrentModule, "concurrent", "Qt6Concurrent", "qtbase" },
+    { QtCoreModule, "core", "Qt6Core", "qtbase" },
+    { QtDeclarativeModule, "declarative", "Qt6Declarative", "qtquick1" },
+    { QtDesignerModule, "designer", "Qt6Designer", 0 },
+    { QtDesignerComponents, "designercomponents", "Qt6DesignerComponents", 0 },
     { QtEnginioModule, "enginio", "Enginio", 0 },
-    { QtGuiModule, "gui", "Qt5Gui", "qtbase" },
-    { QtHelpModule, "qthelp", "Qt5Help", "qt_help" },
-    { QtMultimediaModule, "multimedia", "Qt5Multimedia", "qtmultimedia" },
-    { QtMultimediaWidgetsModule, "multimediawidgets", "Qt5MultimediaWidgets", "qtmultimedia" },
-    { QtMultimediaQuickModule, "multimediaquick", "Qt5MultimediaQuick_p", "qtmultimedia" },
-    { QtNetworkModule, "network", "Qt5Network", "qtbase" },
-    { QtNfcModule, "nfc", "Qt5Nfc", 0 },
-    { QtOpenGLModule, "opengl", "Qt5OpenGL", 0 },
-    { QtPositioningModule, "positioning", "Qt5Positioning", 0 },
-    { QtPrintSupportModule, "printsupport", "Qt5PrintSupport", 0 },
-    { QtQmlModule, "qml", "Qt5Qml", "qtdeclarative" },
+    { QtGuiModule, "gui", "Qt6Gui", "qtbase" },
+    { QtHelpModule, "qthelp", "Qt6Help", "qt_help" },
+    { QtMultimediaModule, "multimedia", "Qt6Multimedia", "qtmultimedia" },
+    { QtMultimediaWidgetsModule, "multimediawidgets", "Qt6MultimediaWidgets", "qtmultimedia" },
+    { QtMultimediaQuickModule, "multimediaquick", "Qt6MultimediaQuick_p", "qtmultimedia" },
+    { QtNetworkModule, "network", "Qt6Network", "qtbase" },
+    { QtNfcModule, "nfc", "Qt6Nfc", 0 },
+    { QtOpenGLModule, "opengl", "Qt6OpenGL", 0 },
+    { QtPositioningModule, "positioning", "Qt6Positioning", 0 },
+    { QtPrintSupportModule, "printsupport", "Qt6PrintSupport", 0 },
+    { QtQmlModule, "qml", "Qt6Qml", "qtdeclarative" },
     { QtQmlToolingModule, "qmltooling", "qmltooling", 0 },
-    { QtQuickModule, "quick", "Qt5Quick", "qtdeclarative" },
-    { QtQuickParticlesModule, "quickparticles", "Qt5QuickParticles", 0 },
-    { QtQuickWidgetsModule, "quickwidgets", "Qt5QuickWidgets", 0 },
-    { QtScriptModule, "script", "Qt5Script", "qtscript" },
-    { QtScriptToolsModule, "scripttools", "Qt5ScriptTools", "qtscript" },
-    { QtSensorsModule, "sensors", "Qt5Sensors", 0 },
-    { QtSerialPortModule, "serialport", "Qt5SerialPort", "qtserialport" },
-    { QtSqlModule, "sql", "Qt5Sql", "qtbase" },
-    { QtSvgModule, "svg", "Qt5Svg", 0 },
-    { QtTestModule, "test", "Qt5Test", "qtbase" },
-    { QtWebKitModule, "webkit", "Qt5WebKit", 0 },
-    { QtWebKitWidgetsModule, "webkitwidgets", "Qt5WebKitWidgets", 0 },
-    { QtWebSocketsModule, "websockets", "Qt5WebSockets", "qtwebsockets" },
-    { QtWidgetsModule, "widgets", "Qt5Widgets", "qtbase" },
-    { QtWinExtrasModule, "winextras", "Qt5WinExtras", 0 },
-    { QtXmlModule, "xml", "Qt5Xml", "qtbase" },
-    { QtXmlPatternsModule, "xmlpatterns", "Qt5XmlPatterns", "qtxmlpatterns" },
-    { QtWebEngineCoreModule, "webenginecore", "Qt5WebEngineCore", 0 },
-    { QtWebEngineModule, "webengine", "Qt5WebEngine", "qtwebengine" },
-    { QtWebEngineWidgetsModule, "webenginewidgets", "Qt5WebEngineWidgets", 0 },
-    { Qt3DCoreModule, "3dcore", "Qt53DCore", 0 },
-    { Qt3DRendererModule, "3drenderer", "Qt53DRenderer", 0 },
-    { Qt3DQuickModule, "3dquick", "Qt53DQuick", 0 },
-    { Qt3DQuickRendererModule, "3dquickrenderer", "Qt53DQuickRenderer", 0 },
-    { Qt3DInputModule, "3dinput", "Qt53DInput", 0 },
-    { QtLocationModule, "geoservices", "Qt5Location", 0 },
-    { QtWebChannelModule, "webchannel", "Qt5WebChannel", 0 },
-    { QtTextToSpeechModule, "texttospeech", "Qt5TextToSpeech", 0 },
-    { QtSerialBusModule, "serialbus", "Qt5SerialBus", 0 }
+    { QtQuickModule, "quick", "Qt6Quick", "qtdeclarative" },
+    { QtQuickParticlesModule, "quickparticles", "Qt6QuickParticles", 0 },
+    { QtQuickWidgetsModule, "quickwidgets", "Qt6QuickWidgets", 0 },
+    { QtScriptModule, "script", "Qt6Script", "qtscript" },
+    { QtScriptToolsModule, "scripttools", "Qt6ScriptTools", "qtscript" },
+    { QtSensorsModule, "sensors", "Qt6Sensors", 0 },
+    { QtSerialPortModule, "serialport", "Qt6SerialPort", "qtserialport" },
+    { QtSqlModule, "sql", "Qt6Sql", "qtbase" },
+    { QtSvgModule, "svg", "Qt6Svg", 0 },
+    { QtTestModule, "test", "Qt6Test", "qtbase" },
+    { QtWebKitModule, "webkit", "Qt6WebKit", 0 },
+    { QtWebKitWidgetsModule, "webkitwidgets", "Qt6WebKitWidgets", 0 },
+    { QtWebSocketsModule, "websockets", "Qt6WebSockets", "qtwebsockets" },
+    { QtWidgetsModule, "widgets", "Qt6Widgets", "qtbase" },
+    { QtWinExtrasModule, "winextras", "Qt6WinExtras", 0 },
+    { QtXmlModule, "xml", "Qt6Xml", "qtbase" },
+    { QtXmlPatternsModule, "xmlpatterns", "Qt6XmlPatterns", "qtxmlpatterns" },
+    { QtWebEngineCoreModule, "webenginecore", "Qt6WebEngineCore", 0 },
+    { QtWebEngineModule, "webengine", "Qt6WebEngine", "qtwebengine" },
+    { QtWebEngineWidgetsModule, "webenginewidgets", "Qt6WebEngineWidgets", 0 },
+    { Qt3DCoreModule, "3dcore", "Qt63DCore", 0 },
+    { Qt3DRendererModule, "3drenderer", "Qt63DRenderer", 0 },
+    { Qt3DQuickModule, "3dquick", "Qt63DQuick", 0 },
+    { Qt3DQuickRendererModule, "3dquickrenderer", "Qt63DQuickRenderer", 0 },
+    { Qt3DInputModule, "3dinput", "Qt63DInput", 0 },
+    { QtLocationModule, "geoservices", "Qt6Location", 0 },
+    { QtWebChannelModule, "webchannel", "Qt6WebChannel", 0 },
+    { QtTextToSpeechModule, "texttospeech", "Qt6TextToSpeech", 0 },
+    { QtSerialBusModule, "serialbus", "Qt6SerialBus", 0 }
 };
 
 bool operator==(const LibraryInfo &a, const LibraryInfo &b)
@@ -241,30 +241,26 @@ bool copyFilePrintStatus(const QString &from, const QString &to)
         dir.mkpath(".");
     }
 
-    if (QFile::copy(from, to)) {
-        QFile dest(to);
-        dest.setPermissions(dest.permissions() | QFile::WriteOwner | QFile::WriteUser);
-        LogNormal() << " copied:" << from;
-        LogNormal() << " to" << to;
-
-        // The source file might not have write permissions set. Set the
-        // write permission on the target file to make sure we can use
-        // install_name_tool on it later.
-        QFile toFile(to);
-        if (toFile.permissions() & QFile::WriteOwner)
-            return true;
-
-        if (!toFile.setPermissions(toFile.permissions() | QFile::WriteOwner)) {
-            LogError() << "Failed to set u+w permissions on target file: " << to;
-            return false;
+    //update the logic to use cp -d to fix the issue that the soft link file is not expected when do copy
+    QFileInfo info(from);
+    QStringList list;
+    list.append("-d");
+    list.append("-f");
+    list.append(from);
+    list.append(to);
+    QProcess::execute("cp", list);
+    if(info.isSymbolicLink()) {
+        //LogNormal() << " copied soft linked:" << info.symLinkTarget();
+        list.clear();
+        list.append(info.symLinkTarget());
+        int end = to.lastIndexOf("/");
+        QString dest = to.mid(0, end + 1);
+        list.append(dest);
+        //LogNormal() << " dest" << dest;
+        QProcess::execute("cp", list);
         }
-
         return true;
-    } else {
-        LogError() << "file copy failed from" << from;
-        LogError() << " to" << to;
-        return false;
-    }
+
 }
 
 bool copyCopyrightFile(QString libPath){
@@ -371,6 +367,9 @@ LddInfo findDependencyInfo(const QString &binaryPath)
 
     foreach (QString outputLine, outputLines) {
 
+       if(outputLine.contains("libQtCore.so.6")){
+               qtDetected = 6;
+       }
        if(outputLine.contains("libQt5")){
                qtDetected = 5;
        }
@@ -840,7 +839,8 @@ bool patchQtCore(const QString &path, const QString &variable, const QString &va
 
 void changeIdentification(const QString &id, const QString &binaryPath)
 {
-    LogNormal() << "Checking rpath in" << binaryPath;
+    LogDebug() << "Checking rpath in" << binaryPath;
+    return;
     QString oldRpath = runPatchelf(QStringList() << "--print-rpath" << binaryPath);
     LogDebug() << "oldRpath:" << oldRpath;
     if (oldRpath.startsWith("/")){
@@ -872,8 +872,8 @@ void changeIdentification(const QString &id, const QString &binaryPath)
     runPatchelf(QStringList() << "--set-rpath" << rpath.join(":") << binaryPath);
 
     // qt_prfxpath:
-    if (binaryPath.contains("libQt5Core")) {
-        LogDebug() << "libQt5Core detected, patching its hardcoded strings";
+    if (binaryPath.contains("libQt6Core")) {
+        LogDebug() << "libQt6Core detected, patching its hardcoded strings";
 
         /* https://codereview.qt-project.org/gitweb?p=qt/qttools.git;a=blob_plain;f=src/windeployqt/utils.cpp;h=e89496ea1f371ed86f6937284c1c801daf576572;hb=7be81b804da102b374c2089aac38353a0383c254
          * Search for "qt_prfxpath=<xxx>" in a path, and replace it with "qt_prfxpath=." or "qt_prfxpath=.." */
@@ -1121,6 +1121,9 @@ DeploymentInfo deployQtLibraries(const QString &appDirPath, const QStringList &a
            } else if(qtDetected == 4){
                qmakePath = QStandardPaths::findExecutable("qmake-qt4");
                LogDebug() << "qmake 4";
+           }else if(qtDetected == 6) {
+                qmakePath = QStandardPaths::findExecutable("qmake-qt6");
+                LogDebug() << "qmake 6";
            }
 
            if(qmakePath.isEmpty()){
@@ -1233,8 +1236,8 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
     LogDebug() << "deploymentInfo.deployedLibraries before attempting to bundle required plugins:" << deploymentInfo.deployedLibraries;
 
     // Platform plugin:
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5Gui")) {
-        LogDebug() << "libQt5Gui detected";
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6Gui")) {
+        LogDebug() << "libQt6Gui detected";
         pluginList.append("platforms/libqxcb.so");
 	// Platform plugin contexts - apparently needed to enter special characters
         QStringList platformPluginContexts = QDir(pluginSourcePath +  QStringLiteral("/platforminputcontexts")).entryList(QStringList() << QStringLiteral("*.so"));
@@ -1293,9 +1296,9 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
     }
 
     // Platform OpenGL context
-    if ((containsHowOften(deploymentInfo.deployedLibraries, "libQt5OpenGL"))
-		    or (containsHowOften(deploymentInfo.deployedLibraries, "libQt5Gui"))
-		    or (containsHowOften(deploymentInfo.deployedLibraries, "libQt5XcbQpa"))
+    if ((containsHowOften(deploymentInfo.deployedLibraries, "libQt6OpenGL"))
+		    or (containsHowOften(deploymentInfo.deployedLibraries, "libQt6Gui"))
+		    or (containsHowOften(deploymentInfo.deployedLibraries, "libQt6XcbQpa"))
 		    or (containsHowOften(deploymentInfo.deployedLibraries, "libxcb-glx"))) {
         QStringList xcbglintegrationPlugins = QDir(pluginSourcePath +  QStringLiteral("/xcbglintegrations")).entryList(QStringList() << QStringLiteral("*.so"));
         foreach (const QString &plugin, xcbglintegrationPlugins) {
@@ -1303,19 +1306,19 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
         }
     }
 
-    // Also deploy plugins/iconengines/libqsvgicon.so whenever libQt5Svg.so.* is about to be deployed,
+    // Also deploy plugins/iconengines/libqsvgicon.so whenever libQt6Svg.so.* is about to be deployed,
     // https://github.com/probonopd/linuxdeployqt/issues/36
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5Svg")) {
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6Svg")) {
         pluginList.append(QStringLiteral("iconengines/libqsvgicon.so"));
     }
 
     // CUPS print support
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5PrintSupport")) {
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6PrintSupport")) {
         pluginList.append("printsupport/libcupsprintersupport.so");
     }
 
     // Network
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5Network")) {
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6Network")) {
         QStringList bearerPlugins = QDir(pluginSourcePath +  QStringLiteral("/bearer")).entryList(QStringList() << QStringLiteral("*.so"));
         foreach (const QString &plugin, bearerPlugins) {
             pluginList.append(QStringLiteral("bearer/") + plugin);
@@ -1323,7 +1326,7 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
     }
 
     // Sql plugins if QtSql library is in use
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5Sql")) {
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6Sql")) {
         QStringList sqlPlugins = QDir(pluginSourcePath +  QStringLiteral("/sqldrivers")).entryList(QStringList() << QStringLiteral("*.so"));
         foreach (const QString &plugin, sqlPlugins) {
             pluginList.append(QStringLiteral("sqldrivers/") + plugin);
@@ -1331,7 +1334,7 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
     }
 
     // Positioning plugins if QtPositioning library is in use
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5Positioning")) {
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6Positioning")) {
         QStringList posPlugins = QDir(pluginSourcePath +  QStringLiteral("/position")).entryList(QStringList() << QStringLiteral("*.so"));
         foreach (const QString &plugin, posPlugins) {
             pluginList.append(QStringLiteral("position/") + plugin);
@@ -1339,10 +1342,10 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
     }
 
     // multimedia plugins if QtMultimedia library is in use
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5Multimedia")) {
-        QStringList plugins = QDir(pluginSourcePath + QStringLiteral("/mediaservice")).entryList(QStringList() << QStringLiteral("*.so"));
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6Multimedia")) {
+        QStringList plugins = QDir(pluginSourcePath + QStringLiteral("/multimedia")).entryList(QStringList() << QStringLiteral("*.so"));
         foreach (const QString &plugin, plugins) {
-            pluginList.append(QStringLiteral("mediaservice/") + plugin);
+            pluginList.append(QStringLiteral("multimedia/") + plugin);
         }
         plugins = QDir(pluginSourcePath + QStringLiteral("/audio")).entryList(QStringList() << QStringLiteral("*.so"));
         foreach (const QString &plugin, plugins) {
@@ -1353,13 +1356,13 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
     QString sourcePath;
     QString destinationPath;
 
-    // Qt WebEngine if libQt5WebEngineCore is in use
+    // Qt WebEngine if libQt6WebEngineCore is in use
     // https://doc-snapshots.qt.io/qt5-5.7/qtwebengine-deploying.html
     // TODO: Rather than hardcode the source paths, somehow get them dynamically
     // from the Qt instance that is to be bundled (pull requests welcome!)
     // especially since stuff that is supposed to come from resources actually
     // seems to come in libexec in the upstream Qt binary distribution
-    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt5WebEngineCore")) {
+    if (containsHowOften(deploymentInfo.deployedLibraries, "libQt6WebEngineCore")) {
         // Find directories with needed files:
         QString qtLibexecPath = qtToBeBundledInfo.value("QT_INSTALL_LIBEXECS");
         QString qtDataPath = qtToBeBundledInfo.value("QT_INSTALL_DATA");
@@ -1450,7 +1453,8 @@ void deployPlugins(const AppDirInfo &appDirInfo, const QString &pluginSourcePath
             QDir dir;
             dir.mkpath(QFileInfo(destinationPath).path());
             QList<LibraryInfo> libraries = getQtLibraries(sourcePath, appDirInfo.path, deploymentInfo.rpathsUsed);
-            LogDebug() << "Deploying plugin" << sourcePath;
+            LogNormal() << "Deploying plugin" << sourcePath;
+            LogNormal() << "Deploying plugin destinationPath:" << destinationPath;
             if (copyFilePrintStatus(sourcePath, destinationPath)) {
                 runStrip(destinationPath);
                 deployQtLibraries(libraries, appDirInfo.path, QStringList() << destinationPath, deploymentInfo.useLoaderPath);

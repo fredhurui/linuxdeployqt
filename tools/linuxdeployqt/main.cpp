@@ -65,7 +65,7 @@ int main(int argc, char **argv)
     QStringList additionalExecutables;
     bool qmldirArgumentUsed = false;
     bool skipTranslations = false;
-    bool skipGlibcCheck = false;
+    bool skipGlibcCheck = true;
     QStringList qmlDirs;
     QStringList qmlImportPaths;
     QString qmakeExecutable;
@@ -392,6 +392,28 @@ int main(int argc, char **argv)
         if (!QFile::link(relativeBinPath, appDirPath + "/AppRun")) {
             LogError() << "Could not create AppRun link";
         }
+    }
+
+    //Create start.sh to set LD_LIBRARY_PATH
+    QFile startSh(appDirPath + "/start.sh");
+    if(startSh.exists()){
+        qDebug() << "Keeping existing start.sh";
+    } else {
+        startSh.open( QIODevice::ReadWrite | QIODevice::Text );
+        QString content("#!/bin/bash");
+        content.append("\n");
+        content.append("export export LD_LIBRARY_PATH=./lib:$LD_LIBRARY_PATH");
+        content.append("\n");
+        content.append("echo \"LD_LIBRARY_PATH=$LD_LIBRARY_PATH\"");
+        content.append("\n");
+        content.append("./");
+        content.append(appName);
+        content.append(" &");
+        content.append("\n");
+        int bytes = startSh.write(content.toStdString().c_str(), content.length());
+        qDebug() << "write start.sh bytes:"<<bytes;
+        startSh.setPermissions(startSh.permissions()|QFileDevice::ExeOwner|QFileDevice::ExeGroup|QFileDevice::ExeOther);
+        startSh.close();
     }
 
     /* Copy the desktop file in place, into the top level of the AppDir */
